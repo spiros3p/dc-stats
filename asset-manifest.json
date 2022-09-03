@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dc-stats/static/css/main.8e69e9b2.css",
+    "main.js": "/dc-stats/static/js/main.1503ad0a.js",
+    "static/media/waxSDM.png": "/dc-stats/static/media/waxSDM.c462e320c5792e50d7f9.png",
+    "static/media/flowSDM.png": "/dc-stats/static/media/flowSDM.432fdc6bb6c9739781df.png",
+    "index.html": "/dc-stats/index.html",
+    "main.8e69e9b2.css.map": "/dc-stats/static/css/main.8e69e9b2.css.map",
+    "main.1503ad0a.js.map": "/dc-stats/static/js/main.1503ad0a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8e69e9b2.css",
+    "static/js/main.1503ad0a.js"
+  ]
+}
