@@ -3,8 +3,9 @@ import flowSDM from "./media/flowSDM.png";
 import waxSDM from "./media/waxSDM.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { mainFlowFetch } from './flow/flowFetchPool';
 
-const jsonserverURL = "http://83.212.109.193:3030/dc-stats";
+const jsonserverURL = "https://dc-api.speppas.online/dc-stats";
 
 const totalLandNFTs = {
   common: 3140,
@@ -33,7 +34,7 @@ let landsInPacks;
 let landsInGame;
 let lastUpdated;
 let generalInfo;
-let tokensPrice; //soon
+let tokensPrice = {}; //soon
 
 export default function App() {
   const [fetched, setFetched] = useState(false);
@@ -69,6 +70,8 @@ export default function App() {
         axios.get(`${jsonserverURL}/landsInGame`),
         axios.get(`${jsonserverURL}/lastUpdated`),
         axios.get(`${jsonserverURL}/generalInfo`),
+        axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd'),
+        axios.get('https://wax.alcor.exchange/api/markets/542')
       ])
       bugs = response[0].data;
       openedPacks = response[1].data;
@@ -76,6 +79,12 @@ export default function App() {
       landsInGame = response[3].data;
       lastUpdated = response[4].data;
       generalInfo = response[5].data;
+      tokensPrice['usdWAX'] = response[6].data.wax.usd;
+      tokensPrice['waxSDM'] = response[7].data.last_price;
+      tokensPrice['sdmUsdChange'] = calculateChangeInPrice(initialSDMPrice.usdWAX * initialSDMPrice.waxSDM, tokensPrice['usdWAX'] * tokensPrice['waxSDM']);
+      tokensPrice['sdmWaxChange'] = calculateChangeInPrice( initialSDMPrice.waxSDM, tokensPrice['waxSDM']);
+      tokensPrice['flowSDM'] = await mainFlowFetch();
+      tokensPrice['sdmFlowchange'] = calculateChangeInPrice( initialSDMPrice.flowSDM, tokensPrice['flowSDM']);
       setFetched(true);
     } catch (e) {
       if (e.response) {
@@ -84,6 +93,19 @@ export default function App() {
         console.error(e);
       }
     }
+  }
+
+  const calculateChangeInPrice = (initial, current) => {
+    let percentage = 0;
+    let mutliplier = 0;
+    if (current > initial) {
+      percentage = ((current / initial) - 1) * 100;
+      // mutliplier = current / initial;
+    }else if (current < initial){
+      percentage = ((current / initial) - 1) * 100;
+      // mutliplier = 0 //to discuss
+    }
+    return percentage
   }
 
   const calculateLastDeployment = (timestamp) => {
@@ -243,14 +265,15 @@ export default function App() {
           <div className="row">
             {/* WAX */}
             <div className="col-6">
-              <div className="token">
+              <div className="token mb-2">
                 <span className="symbol wax"><img src={waxSDM} alt='waxSDM icon' /></span>
                 {/* <span className="price">0.005</span> */}
               </div>
               {/* current wax sdm-wax*/}
               <div>
-                <span>0.00052</span>
-                <span className="smaller"> SDM/WAX</span>
+                <span>{tokensPrice?.waxSDM?.toFixed(7)}</span>
+                <span className="smaller"> SDM/WAX </span>
+                <span style={{"color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green"}}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-wax */}
               <div>
@@ -260,8 +283,9 @@ export default function App() {
               </div>
               {/* current wax sdm-wax*/}
               <div>
-                <span>{(0.00052 * 0.094).toFixed(5)}</span>
+                <span>{(0.00052 * tokensPrice?.usdWAX).toFixed(7)}</span>
                 <span className="smaller"> SDM/USD</span>
+                <span style={{"color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green"}}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-usd */}
               <div>
@@ -270,16 +294,18 @@ export default function App() {
                 <span className="smaller"> SDM(w)/USD</span>
               </div>
             </div>
+
             {/* FLOW */}
             <div className="col-6">
-              <div className="token">
+              <div className="token mb-2">
                 <span className="symbol flow"><img src={flowSDM} alt='flowSDM icon' /></span>
                 {/* <span className="price">0.004</span> */}
               </div>
               {/* current flow sdm-usdc*/}
               <div >
-                <span>0.0000479</span>
-                <span className="smaller"> SDM/USDC</span>
+                <span>{tokensPrice?.flowSDM?.toFixed(7)}</span>
+                <span className="smaller"> SDM/USDC </span>
+                <span style={{"color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green"}}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
               </div>
               {/* initial flow */}
               <div>
@@ -296,14 +322,51 @@ export default function App() {
       <section className="section mb-4">
         <h2 className="section-title">Info</h2>
         <div className="tokens-container mb-5">
-          <div className="row">
+          <div className="row gy-2">
+
             <div className="col-6">
               <div className="token">
                 <span className="smaller x2">In-game Land Owners: </span>
                 <span className="price">{generalInfo?.uniqueLandOwners}</span>
               </div>
             </div>
+
             <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">Mainnet Land game Started: </span>
+                <span className="price"> 07/07/2022</span>
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">FLOW Land sale profits: </span>
+                <br></br>
+                <span className="price"> 13-18/5/2021 | 26,700 $flow</span>
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">WAX Land sale profits: </span> 
+                <br></br>
+                <span className="price"> 25-29/5/2021 | 704K $ in $wax</span>
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">Flow SDM initial LP: 2K$ USDC </span> 
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">WAX SDM initial LP: 1.3K$ in WAX </span> 
+              </div>
+            </div>
+
+            {/* <div className="col-6">
               <div className="token">
                 <span className="smaller x2">Total land NFTs in-game: </span>
                 <span className="price">
@@ -311,7 +374,8 @@ export default function App() {
                   <span className="smaller">/8000</span>
                 </span>
               </div>
-            </div>
+            </div> */}
+          
           </div>
         </div>
       </section>
@@ -327,7 +391,7 @@ export default function App() {
 
       {/* BUGS */}
       <section className="section mb-4">
-        <h2 className="section-title">Bugs/Updates</h2>
+        <h2 className="section-title">Bugs/Updates (some)</h2>
         <h5 className="section-undertitle">
           Last fix/update deployed:
           <span className="important"> {calculateLastDeployment(lastUpdatedState?.clientDeployment)} DAYS</span> ago

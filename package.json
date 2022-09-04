@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://spiros3p.github.io/dc-stats/",
   "dependencies": {
+    "@onflow/fcl": "^1.2.0",
+    "@onflow/types": "^1.0.3",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "jquery": "^3.6.1",

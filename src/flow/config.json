@@ -1,0 +1,11 @@
+{
+    "accessNode": "https://rest-mainnet.onflow.org",
+    "coingeckoPrice": "https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=flow",
+    "pairs": {
+        "flowUsdcPairAddr": "0xfa82796435e15832",
+        "myFlowPairAddr": "0x0f280aa19943aa44",
+        "sdmUsdcPairAddr": "0x6155398610a02093"
+    },
+    "quotePairAddr": "0x6155398610a02093",
+    "quotePairBase": "USDC"
+}
