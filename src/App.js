@@ -11,241 +11,33 @@ const totalLandNFTs = {
   rare: 600,
   epic: 200,
   legendary: 50,
-  mythic: 10
+  mythic: 10,
+  total: 4000
 };
 
-let landsInGame;
-// let landsInGame = {
-//   wax: {
-//     common: {
-//       total: 3140,
-//       current: 453,
-//       lastCurrent: -1
-//     },
-//     rare: {
-//       total: 600,
-//       current: 82,
-//       lastCurrent: -1
-//     },
-//     epic: {
-//       total: 200,
-//       lastCurrent: -1,
-//       current: 31
-//     },
-//     legendary: {
-//       total: 50,
-//       lastCurrent: -1,
-//       current: 8
-//     },
-//     mythic: {
-//       total: 10,
-//       lastCurrent: -1,
-//       current: 0
-//     }
-//   },
-//   flow: {
-//     common: {
-//       total: 3140,
-//       current: 726,
-//       lastCurrent: -1
-//     },
-//     rare: {
-//       total: 600,
-//       current: 106,
-//       lastCurrent: -1
-//     },
-//     epic: {
-//       total: 200,
-//       lastCurrent: -1,
-//       current: 0
-//     },
-//     legendary: {
-//       total: 50,
-//       lastCurrent: -1,
-//       current: 0
-//     },
-//     mythic: {
-//       total: 10,
-//       lastCurrent: -1,
-//       current: 2
-//     }
-//   }
-// };
+const totalPacks = {
+  "waxLands": 2700,
+  "flowLands": 2500,
+  "flowBonus": 0
+}
 
-let landsInPacks;
-// let landsInPacks = {
-//   wax: {
-//     common: {
-//       total: 3140,
-//       current: 453,
-//       lastCurrent: -1
-//     },
-//     rare: {
-//       total: 600,
-//       current: 82,
-//       lastCurrent: -1
-//     },
-//     epic: {
-//       total: 200,
-//       lastCurrent: -1,
-//       current: 31
-//     },
-//     legendary: {
-//       total: 50,
-//       lastCurrent: -1,
-//       current: 8
-//     },
-//     mythic: {
-//       total: 10,
-//       lastCurrent: -1,
-//       current: 0
-//     }
-//   },
-//   flow: {
-//     common: {
-//       total: 3140,
-//       current: 726,
-//       lastCurrent: -1
-//     },
-//     rare: {
-//       total: 600,
-//       current: 106,
-//       lastCurrent: -1
-//     },
-//     epic: {
-//       total: 200,
-//       lastCurrent: -1,
-//       current: 0
-//     },
-//     legendary: {
-//       total: 50,
-//       lastCurrent: -1,
-//       current: 0
-//     },
-//     mythic: {
-//       total: 10,
-//       lastCurrent: -1,
-//       current: 2
-//     }
-//   }
-// };
+const initialSDMPrice = {
+  "waxSDM": 0.0132, //wax 
+  "flowSDM": 0.001, //usd
+  "usdWAX": 0.08842 // 16/6/22
+}
 
-let openedPacks;
-// let openedPacks = {
-//   "wax": {
-//     "rancho": {
-//       "total": 2050,
-//       "current": 1663,
-//       "lastCurrent": -1,
-//       "landsPerPack": 1,
-//       "cardsPerPack": 0
-//     },
-//     "mayor": {
-//       "total": 650,
-//       "current": 573,
-//       "lastCurrent": -1,
-//       "landsPerPack": 3,
-//       "cardsPerPack": 0
-//     }
-//   },
-//   "flow": {
-//     "rancho": {
-//       "total": 2100,
-//       "current": 1626,
-//       "lastCurrent": -1,
-//       "landsPerPack": 1,
-//       "cardsPerPack": 5
-//     },
-//     "mayor": {
-//       "total": 300,
-//       "current": 229,
-//       "lastCurrent": -1,
-//       "landsPerPack": 3,
-//       "cardsPerPack": 15
-//     },
-//     "governors": {
-//       "total": 100,
-//       "current": 89,
-//       "lastCurrent": -1,
-//       "landsPerPack": 10,
-//       "cardsPerPack": 50
-//     },
-//     "bonus": {
-//       "total": 0,
-//       "current": 454,
-//       "lastCurrent": -1,
-//       "landsPerPack": 0,
-//       "cardsPerPack": 5
-//     }
-//   }
-// }
 
 let bugs;
-// let bugs = [
-//   {
-//     "id": 0,
-//     "name": "Land game - Sheriff's office level 3 - NOT WORKING",
-//     "status": false
-//   },
-//   {
-//     "id": 1,
-//     "name": "Card game - PVP mostly plays with default deck, ignoring custom decks",
-//     "status": false
-//   },
-//   {
-//     "id": 2,
-//     "name": "Guild wars",
-//     "status": false
-//   },
-//   {
-//     "id": 3,
-//     "name": "Farming to be launched (redoing our WAX farming tool, UI side remains)",
-//     "status": false
-//   },
-//   {
-//     "id": 4,
-//     "name": "Buying Vampire packs for SDM on TopExpo. Or buy/sell any assets for SDM",
-//     "status": false
-//   },
-//   {
-//     "id": 5,
-//     "name": "Buying Standard packs for SDM and unpacking them in lands or game client with the following mint on WAX or FLOW;",
-//     "status": false
-//   },
-//   {
-//     "id": 6,
-//     "name": "Game client: leagues and seasons for PVP games",
-//     "status": false
-//   },
-//   {
-//     "id": 7,
-//     "name": "Daily rewards for PVP games (unique card, common heroes)",
-//     "status": false
-//   },
-//   {
-//     "id": 8,
-//     "name": "Corresponding infrastructure updates for all above;",
-//     "status": false
-//   },
-//   {
-//     "id": 9,
-//     "name": "Pack auctions for SDM on WAX.",
-//     "status": false
-//   }
-// ]
-
+let openedPacks;
+let landsInPacks;
+let landsInGame;
 let lastUpdated;
-// let lastUpdated = {
-//   "weekly": 1661902856890,
-//   "daily": 1661972093317,
-//   "clientDeployment": 1660070887000
-// }
-
 let generalInfo;
-
+let tokensPrice; //soon
 
 export default function App() {
-  const [fetched, setFetched] = useState();
+  const [fetched, setFetched] = useState(false);
   const [bugsState, setBugsState] = useState(bugs);
   const [openedPacksState, setOpenedPacksState] = useState(openedPacks);
   const [landsInPacksState, setLandsInPacksState] = useState(landsInPacks);
@@ -253,42 +45,44 @@ export default function App() {
   const [lastUpdatedState, setLastUpdatedState] = useState(lastUpdated);
   const [generalInfoState, setGeneralInfoState] = useState(generalInfo);
 
-  useEffect(()=>{
-    console.log("gigo");
+  useEffect(() => {
     fetchEverything();
-  },[])
+  }, [])
 
-  useEffect(()=>{
-    console.debug("RUN");
+  useEffect(() => {
+    // console.log("RUN");
     setBugsState(bugs);
     setOpenedPacksState(openedPacks);
     setLandsInPacksState(landsInPacks);
     setLandsInGameState(landsInGame);
     setLastUpdatedState(lastUpdated);
     setGeneralInfoState(generalInfo);
+    console.log(generalInfo);
   }, [fetched])
 
   const fetchEverything = async () => {
-    try{
-      const response = await axios.get(`${jsonserverURL}/bugs`);
-      bugs = response.data;
-      const response1 = await axios.get(`${jsonserverURL}/openedPacks`);
-      openedPacks = response1.data;
-      const response2 = await axios.get(`${jsonserverURL}/landsInPacks`);
-      landsInPacks = response2.data;
-      const response3 = await axios.get(`${jsonserverURL}/landsInGame`);
-      landsInGame = response3.data;
-      const response4 = await axios.get(`${jsonserverURL}/lastUpdated`);
-      lastUpdated = response4.data;
-      const response5 = await axios.get(`${jsonserverURL}/generalInfo`);
-      generalInfo = response5.data;
+    try {
+      const response = await axios.all([
+        axios.get(`${jsonserverURL}/bugs`),
+        axios.get(`${jsonserverURL}/openedPacks`),
+        axios.get(`${jsonserverURL}/landsInPacks`),
+        axios.get(`${jsonserverURL}/landsInGame`),
+        axios.get(`${jsonserverURL}/lastUpdated`),
+        axios.get(`${jsonserverURL}/generalInfo`),
+      ])
+      bugs = response[0].data;
+      openedPacks = response[1].data;
+      landsInPacks = response[2].data;
+      landsInGame = response[3].data;
+      lastUpdated = response[4].data;
+      generalInfo = response[5].data;
       setFetched(true);
-    }catch(e){
+    } catch (e) {
       if (e.response) {
-        console.error(e.response.data);   
-      }else{
+        console.error(e.response.data);
+      } else {
         console.error(e);
-      }   
+      }
     }
   }
 
@@ -361,7 +155,7 @@ export default function App() {
             <span className="smaller">/{packs?.mayor?.total}</span>
           </td>
         </tr>
-        {packs?.governor && <tr>
+        {packs?.governors && <tr>
           <th scope="row" >Governors</th>
           <td>
             {packs.governors.total - packs.governors.current}
@@ -395,10 +189,14 @@ export default function App() {
                 <tr>
                   <th scope="col" className="wax">WAX</th>
                   <th scope="col">
-                    {items?.wax?.mayor ? 
-                    items?.wax?.mayor.total + items?.wax?.rancho.total - items?.wax?.mayor.current - items?.wax?.rancho.current
-                    :
-                    items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current }
+                    {items?.wax?.mayor ?
+                      items?.wax?.mayor.total + items?.wax?.rancho.total - items?.wax?.mayor.current - items?.wax?.rancho.current
+                      :
+                      items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current}
+                    <span className="smaller">
+                      {items?.wax?.mayor ? `/${totalPacks.waxLands}` : items?.wax?.common ? `/${totalLandNFTs.total}` : '/...'}
+                      &nbsp;
+                    </span>
                   </th>
                 </tr>
               </thead>
@@ -410,7 +208,16 @@ export default function App() {
               <thead>
                 <tr>
                   <th scope="col" className="flow">FLOW</th>
-                  <th scope="col">#</th>
+                  <th scope="col">
+                    {items?.flow?.mayor ?
+                      items?.flow?.mayor.total + items?.flow?.rancho.total - items?.flow?.mayor.current - items?.flow?.rancho.current
+                      :
+                      items?.flow?.common.current + items?.flow?.rare.current + items?.flow?.epic.current + items?.flow?.legendary.current + items?.flow?.mythic.current}
+                    <span className="smaller">
+                      {items?.wax?.mayor ? `/${totalPacks.flowLands}` : items?.flow?.common ? `/${totalLandNFTs.total}` : '/...'}
+                      &nbsp;
+                    </span>
+                  </th>
                 </tr>
               </thead>
               {type(items?.flow)}
@@ -429,22 +236,85 @@ export default function App() {
       </h1>
 
       {/* TOKENS PRICES */}
-      <div className="tokens-container mb-5">
-        <div className="row">
-          <div className="col-6">
-            <div className="token">
-              <span className="symbol wax"><img src={waxSDM} alt='waxSDM icon'/></span>
-              <span className="price">0.005</span>
+      <section className="section mb-4">
+        <h2 className="section-title">Tokens</h2>
+
+        <div className="tokens-container mb-2">
+          <div className="row">
+            {/* WAX */}
+            <div className="col-6">
+              <div className="token">
+                <span className="symbol wax"><img src={waxSDM} alt='waxSDM icon' /></span>
+                {/* <span className="price">0.005</span> */}
+              </div>
+              {/* current wax sdm-wax*/}
+              <div>
+                <span>0.00052</span>
+                <span className="smaller"> SDM/WAX</span>
+              </div>
+              {/* current wax sdm-wax*/}
+              <div>
+                <span>{(0.00052 * 0.094).toFixed(5)}</span>
+                <span className="smaller"> SDM/USD</span>
+              </div>
+              {/* initial wax sdm-wax */}
+              <div>
+                <span className="smaller">INITIAL: </span>
+                <span>{initialSDMPrice.waxSDM}</span>
+                <span className="smaller"> SDM/WAX</span>
+              </div>
+              {/* initial wax sdm-usd */}
+              <div>
+                <span className="smaller">INITIAL: </span>
+                <span>{(initialSDMPrice.waxSDM * initialSDMPrice.usdWAX).toFixed(4)}</span>
+                <span className="smaller"> SDM(w)/USD</span>
+              </div>
             </div>
-          </div>
-          <div className="col-6">
-            <div className="token">
-              <span className="symbol flow"><img src={flowSDM} alt='flowSDM icon'/></span>
-              <span className="price">0.004</span>
+            {/* FLOW */}
+            <div className="col-6">
+              <div className="token">
+                <span className="symbol flow"><img src={flowSDM} alt='flowSDM icon' /></span>
+                {/* <span className="price">0.004</span> */}
+              </div>
+              {/* current flow sdm-usdc*/}
+              <div >
+                <span>0.0000479</span>
+                <span className="smaller"> SDM/USDC</span>
+              </div>
+              {/* initial flow */}
+              <div>
+                <span className="smaller">INITIAL: </span>
+                <span>{initialSDMPrice.flowSDM}</span>
+                <span className="smaller"> SDM/USDC</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* General Info */}
+      <section className="section mb-4">
+        <h2 className="section-title">Info</h2>
+        <div className="tokens-container mb-5">
+          <div className="row">
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">In-game Land Owners: </span>
+                <span className="price">{generalInfo?.uniqueLandOwners}</span>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="token">
+                <span className="smaller x2">Total land NFTs in-game: </span>
+                <span className="price">
+                  {generalInfo?.totalLandsInGame}
+                  <span className="smaller">/8000</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Lands in GAME */}
       {renderTables("Land NFTs Staked in Game", renderLandTablePerBlockchain, landsInGameState)}

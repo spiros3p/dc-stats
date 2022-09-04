@@ -88,6 +88,10 @@ tbody{
 span.smaller{
   font-size: $miniData;
   font-weight: normal !important;
+
+  &.x2{
+    font-size: 12px;
+  }
 }
 
 .section{
