@@ -252,16 +252,16 @@ export default function App() {
                 <span>0.00052</span>
                 <span className="smaller"> SDM/WAX</span>
               </div>
-              {/* current wax sdm-wax*/}
-              <div>
-                <span>{(0.00052 * 0.094).toFixed(5)}</span>
-                <span className="smaller"> SDM/USD</span>
-              </div>
               {/* initial wax sdm-wax */}
               <div>
                 <span className="smaller">INITIAL: </span>
                 <span>{initialSDMPrice.waxSDM}</span>
                 <span className="smaller"> SDM/WAX</span>
+              </div>
+              {/* current wax sdm-wax*/}
+              <div>
+                <span>{(0.00052 * 0.094).toFixed(5)}</span>
+                <span className="smaller"> SDM/USD</span>
               </div>
               {/* initial wax sdm-usd */}
               <div>
