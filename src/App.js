@@ -27,7 +27,6 @@ const initialSDMPrice = {
   "usdWAX": 0.08842 // 16/6/22
 }
 
-
 let bugs;
 let openedPacks;
 let landsInPacks;
@@ -44,6 +43,7 @@ export default function App() {
   const [landsInGameState, setLandsInGameState] = useState(landsInGame);
   const [lastUpdatedState, setLastUpdatedState] = useState(lastUpdated);
   const [generalInfoState, setGeneralInfoState] = useState(generalInfo);
+  const [tokensPriceState, setTokensPriceState] = useState(tokensPrice);
 
   useEffect(() => {
     fetchEverything();
@@ -57,7 +57,7 @@ export default function App() {
     setLandsInGameState(landsInGame);
     setLastUpdatedState(lastUpdated);
     setGeneralInfoState(generalInfo);
-    console.log(generalInfo);
+    setTokensPriceState(tokensPrice);
   }, [fetched])
 
   const fetchEverything = async () => {
