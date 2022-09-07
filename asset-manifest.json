@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/dc-stats/static/css/main.cabf0ede.css",
-    "main.js": "/dc-stats/static/js/main.a7c8dc19.js",
+    "main.js": "/dc-stats/static/js/main.750439f3.js",
     "static/media/waxSDM.png": "/dc-stats/static/media/waxSDM.c462e320c5792e50d7f9.png",
     "static/media/flowSDM.png": "/dc-stats/static/media/flowSDM.432fdc6bb6c9739781df.png",
     "index.html": "/dc-stats/index.html",
     "main.cabf0ede.css.map": "/dc-stats/static/css/main.cabf0ede.css.map",
-    "main.a7c8dc19.js.map": "/dc-stats/static/js/main.a7c8dc19.js.map"
+    "main.750439f3.js.map": "/dc-stats/static/js/main.750439f3.js.map"
   },
   "entrypoints": [
     "static/css/main.cabf0ede.css",
-    "static/js/main.a7c8dc19.js"
+    "static/js/main.750439f3.js"
   ]
 }
