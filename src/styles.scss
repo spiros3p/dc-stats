@@ -63,6 +63,16 @@ table{
       }
     }
 
+    & .info{
+      // font-size: ;
+      color: rgb(212, 212, 212);
+    }
+
+    & .value{
+      font-size: 15px;
+      font-weight: 600;
+    }
+
     & .price{
 
     }

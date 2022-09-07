@@ -79,12 +79,14 @@ export default function App() {
       landsInGame = response[3].data;
       lastUpdated = response[4].data;
       generalInfo = response[5].data;
+      landsInGame['waxTotalCurrent'] = landsInGame.wax.common.total + landsInGame.wax.rare.total + landsInGame.wax.epic.total + landsInGame.wax.legendary.total + landsInGame.wax.mythic.total;
+      landsInGame['flowTotalCurrent'] = landsInGame.flow.common.total + landsInGame.flow.rare.total + landsInGame.flow.epic.total + landsInGame.flow.legendary.total + landsInGame.flow.mythic.total;
       tokensPrice['usdWAX'] = response[6].data.wax.usd;
       tokensPrice['waxSDM'] = response[7].data.last_price;
       tokensPrice['sdmUsdChange'] = calculateChangeInPrice(initialSDMPrice.usdWAX * initialSDMPrice.waxSDM, tokensPrice['usdWAX'] * tokensPrice['waxSDM']);
-      tokensPrice['sdmWaxChange'] = calculateChangeInPrice( initialSDMPrice.waxSDM, tokensPrice['waxSDM']);
+      tokensPrice['sdmWaxChange'] = calculateChangeInPrice(initialSDMPrice.waxSDM, tokensPrice['waxSDM']);
       tokensPrice['flowSDM'] = await mainFlowFetch();
-      tokensPrice['sdmFlowchange'] = calculateChangeInPrice( initialSDMPrice.flowSDM, tokensPrice['flowSDM']);
+      tokensPrice['sdmFlowchange'] = calculateChangeInPrice(initialSDMPrice.flowSDM, tokensPrice['flowSDM']);
       setFetched(true);
     } catch (e) {
       if (e.response) {
@@ -101,7 +103,7 @@ export default function App() {
     if (current > initial) {
       percentage = ((current / initial) - 1) * 100;
       // mutliplier = current / initial;
-    }else if (current < initial){
+    } else if (current < initial) {
       percentage = ((current / initial) - 1) * 100;
       // mutliplier = 0 //to discuss
     }
@@ -116,42 +118,72 @@ export default function App() {
   }
 
   // RENDER land NFTs (WAX & FLOW) in packs and in game
-  const renderLandTablePerBlockchain = (lands) => {
+  const renderLandTablePerBlockchain = (lands, title) => {
     return (
       <tbody>
         <tr>
           <th scope="row" >Common</th>
           <td>
             {lands?.common?.current}
-            <span className="smaller">/{totalLandNFTs.common}</span>
+            <span className="smaller">
+              /{lands?.common?.total || totalLandNFTs.common}
+              {title === "Land NFTs Staked in Game *"
+                &&
+                <span className="smaller" style={{ "color": "red" }}>({`-${lands?.common?.total - lands?.common?.current}`})</span>
+              }
+            </span>
           </td>
         </tr>
         <tr>
           <th scope="row">Rare</th>
           <td>
             {lands?.rare?.current}
-            <span className="smaller">/{totalLandNFTs.rare}</span>
+            <span className="smaller">
+              /{lands?.rare?.total || totalLandNFTs.rare}
+              {title === "Land NFTs Staked in Game *"
+                &&
+                <span className="smaller" style={{ "color": "red" }}>({`-${lands?.rare?.total - lands?.rare?.current}`})</span>
+              }
+            </span>
           </td>
         </tr>
         <tr>
           <th scope="row">Epic</th>
           <td>
             {lands?.epic?.current}
-            <span className="smaller">/{totalLandNFTs.epic}</span>
+            <span className="smaller">
+              /{lands?.epic?.total || totalLandNFTs.epic}
+              {title === "Land NFTs Staked in Game *"
+                &&
+                <span className="smaller" style={{ "color": "red" }}>({`-${lands?.epic?.total - lands?.epic?.current}`})</span>
+              }
+            </span>
           </td>
         </tr>
         <tr>
           <th scope="row">Legendary</th>
           <td>
             {lands?.legendary?.current}
-            <span className="smaller">/{totalLandNFTs.legendary}</span>
+            <span className="smaller">
+              /{lands?.legendary?.total || totalLandNFTs.legendary}
+              {title === "Land NFTs Staked in Game *"
+                &&
+                <span className="smaller" style={{ "color": "red" }}>({`-${lands?.legendary?.total - lands?.legendary?.current}`})</span>
+              }
+            </span>
           </td>
         </tr>
         <tr>
           <th scope="row">Mythic</th>
           <td>
             {lands?.mythic?.current}
-            <span className="smaller">/{totalLandNFTs.mythic}</span>
+            <span className="smaller">
+              /{lands?.mythic?.total || totalLandNFTs.mythic}
+              {title === "Land NFTs Staked in Game *"
+                &&
+                <span className="smaller" style={{ "color": "red" }}>({`-${lands?.mythic?.total - lands?.mythic?.current}`})</span>
+              }
+            </span>
           </td>
         </tr>
 
@@ -160,7 +192,7 @@ export default function App() {
   }
 
   // RENDER land NFTs (WAX & FLOW) in packs and in game
-  const renderPacksPerBlockchain = (packs) => {
+  const renderPacksPerBlockchain = (packs, title = undefined) => {
     return (
       <tbody>
         <tr>
@@ -216,13 +248,17 @@ export default function App() {
                       :
                       items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current}
                     <span className="smaller">
-                      {items?.wax?.mayor ? `/${totalPacks.waxLands}` : items?.wax?.common ? `/${totalLandNFTs.total}` : '/...'}
+                      {items?.wax?.mayor ? `/${totalPacks.waxLands}` : items?.wax?.common ? `/${items?.waxTotalCurrent || totalLandNFTs.total}` : '/...'}
                       &nbsp;
+                      {title === "Land NFTs Staked in Game *"
+                        &&
+                        <span className="smaller" style={{ "color": "red" }}>({`-${items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current - items?.waxTotalCurrent}`})</span>
+                      }
                     </span>
                   </th>
                 </tr>
               </thead>
-              {type(items?.wax)}
+              {type(items?.wax, title)}
             </table>
           </div>
           <div className="col-6 col-sm-5 col-md-4 col-lg-3">
@@ -236,16 +272,24 @@ export default function App() {
                       :
                       items?.flow?.common.current + items?.flow?.rare.current + items?.flow?.epic.current + items?.flow?.legendary.current + items?.flow?.mythic.current}
                     <span className="smaller">
-                      {items?.wax?.mayor ? `/${totalPacks.flowLands}` : items?.flow?.common ? `/${totalLandNFTs.total}` : '/...'}
+                      {items?.wax?.mayor ? `/${totalPacks.flowLands}` : items?.flow?.common ? `/${items?.flowTotalCurrent || totalLandNFTs.total}` : '/...'}
                       &nbsp;
+                      {title === "Land NFTs Staked in Game *"
+                        &&
+                        <span className="smaller" style={{ "color": "red" }}>({`-${items?.flow?.common.current + items?.flow?.rare.current + items?.flow?.epic.current + items?.flow?.legendary.current + items?.flow?.mythic.current - items?.flowTotalCurrent}`})</span>
+                      }
                     </span>
                   </th>
                 </tr>
               </thead>
-              {type(items?.flow)}
+              {type(items?.flow, title)}
             </table>
           </div>
         </div>
+        {title === "Land NFTs Staked in Game *"
+          &&
+          <span className="red-note">* (currently staked)/(total ever staked) for WAX. Flow ONLY shows total ever staked</span>
+        }
       </section>
     )
   }
@@ -273,7 +317,7 @@ export default function App() {
               <div>
                 <span>{tokensPrice?.waxSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/WAX </span>
-                <span style={{"color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green"}}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
+                <span style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-wax */}
               <div>
@@ -285,7 +329,7 @@ export default function App() {
               <div>
                 <span>{(0.00052 * tokensPrice?.usdWAX).toFixed(7)}</span>
                 <span className="smaller"> SDM/USD</span>
-                <span style={{"color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green"}}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
+                <span style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-usd */}
               <div>
@@ -305,7 +349,7 @@ export default function App() {
               <div >
                 <span>{tokensPrice?.flowSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/USDC </span>
-                <span style={{"color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green"}}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
+                <span style={{ "color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green" }}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
               </div>
               {/* initial flow */}
               <div>
@@ -326,43 +370,48 @@ export default function App() {
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">In-game Land Owners: </span>
-                <span className="price">{generalInfo?.uniqueLandOwners}</span>
+                <span className="smaller x2 info">In-game Land Owners: </span><br></br>
+                <span className="value">{generalInfo?.uniqueLandOwners}</span>
               </div>
             </div>
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">Mainnet Land game Started: </span>
-                <span className="price"> 07/07/2022</span>
+                <span className="smaller x2 info">Mainnet Land game Started: </span><br></br>
+                <span className="value"> 07/07/2022</span>
               </div>
             </div>
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">FLOW Land sale profits: </span>
+                <span className="smaller x2 info">FLOW Land sale profits: </span>
                 <br></br>
-                <span className="price"> 13-18/5/2021 | 26,700 $flow</span>
+                <span className="value"> 13-18/5/2021 | 26,700 $flow</span>
               </div>
             </div>
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">WAX Land sale profits: </span> 
+                <span className="smaller x2 info">WAX Land sale profits: </span>
                 <br></br>
-                <span className="price"> 25-29/5/2021 | 704K $ in $wax</span>
+                <span className="value"> 25-29/5/2021 | 704K $ in $wax</span>
               </div>
             </div>
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">Flow SDM initial LP: 2K$ USDC </span> 
+                <span className="smaller x2 info">Flow SDM initial LP: </span>
+                <br></br>
+                <span className="value"> 2K$ USDC</span>
               </div>
             </div>
 
             <div className="col-6">
               <div className="token">
-                <span className="smaller x2">WAX SDM initial LP: 1.3K$ in WAX </span> 
+                <span className="smaller x2 info">WAX SDM initial LP:
+                </span>
+                <br></br>
+                <span className="value">1.3K$ in WAX</span>
               </div>
             </div>
 
@@ -375,13 +424,13 @@ export default function App() {
                 </span>
               </div>
             </div> */}
-          
+
           </div>
         </div>
       </section>
 
       {/* Lands in GAME */}
-      {renderTables("Land NFTs Staked in Game", renderLandTablePerBlockchain, landsInGameState)}
+      {renderTables("Land NFTs Staked in Game *", renderLandTablePerBlockchain, landsInGameState)}
 
       {/* Lands in PACKS */}
       {renderTables("Land NFTs in Packs", renderLandTablePerBlockchain, landsInPacksState)}
@@ -394,8 +443,9 @@ export default function App() {
         <h2 className="section-title">Bugs/Updates (some)</h2>
         <h5 className="section-undertitle">
           Last fix/update deployed:
-          <span className="important"> {calculateLastDeployment(lastUpdatedState?.clientDeployment)} DAYS</span> ago
+          <span className="important"> {calculateLastDeployment(lastUpdatedState?.clientDeployment)} DAYS</span> ago**
         </h5>
+        <span style={{ "fontSize": "13px" }}>** according to DC's discord announcements</span>
 
         <div className="container-fluid">
           <div className="row justify-content-center">
