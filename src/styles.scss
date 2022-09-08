@@ -51,6 +51,14 @@ table{
 
 .tokens-container{
   font-size: 13px;
+  
+  & .shoOnHover{
+    & .hide{opacity: 0;}
+    &:hover{
+      &+.hide{opacity: 1;}
+      & .hide{opacity: 1;}
+    }
+  }
 
   & .token{
 
