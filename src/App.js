@@ -317,10 +317,10 @@ export default function App() {
               <div>
                 <span>{tokensPrice?.waxSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/WAX </span>
-                <span style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
+                <span className="hide" style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-wax */}
-              <div>
+              <div className="hide">
                 <span className="smaller">INITIAL: </span>
                 <span>{initialSDMPrice.waxSDM}</span>
                 <span className="smaller"> SDM/WAX</span>
@@ -332,7 +332,7 @@ export default function App() {
                 <span style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-usd */}
-              <div>
+              <div className="hide">
                 <span className="smaller">INITIAL: </span>
                 <span>{(initialSDMPrice.waxSDM * initialSDMPrice.usdWAX).toFixed(4)}</span>
                 <span className="smaller"> SDM(w)/USD</span>
@@ -349,10 +349,10 @@ export default function App() {
               <div >
                 <span>{tokensPrice?.flowSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/USDC </span>
-                <span style={{ "color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green" }}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
+                <span className="hide" style={{ "color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green" }}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
               </div>
               {/* initial flow */}
-              <div>
+              <div className="hide">
                 <span className="smaller">INITIAL: </span>
                 <span>{initialSDMPrice.flowSDM}</span>
                 <span className="smaller"> SDM/USDC</span>
