@@ -52,7 +52,7 @@ table{
 .tokens-container{
   font-size: 13px;
   
-  & .shoOnHover{
+  & .showOnHover{
     & .hide{opacity: 0;}
     &:hover{
       &+.hide{opacity: 1;}
