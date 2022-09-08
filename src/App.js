@@ -252,7 +252,7 @@ export default function App() {
                       &nbsp;
                       {title === "Land NFTs Staked in Game *"
                         &&
-                        <span className="smaller" style={{ "color": "red" }}>({`-${items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current - items?.waxTotalCurrent}`})</span>
+                        <span className="smaller" style={{ "color": "red" }}>({`${items?.wax?.common.current + items?.wax?.rare.current + items?.wax?.epic.current + items?.wax?.legendary.current + items?.wax?.mythic.current - items?.waxTotalCurrent}`})</span>
                       }
                     </span>
                   </th>
@@ -276,7 +276,7 @@ export default function App() {
                       &nbsp;
                       {title === "Land NFTs Staked in Game *"
                         &&
-                        <span className="smaller" style={{ "color": "red" }}>({`-${items?.flow?.common.current + items?.flow?.rare.current + items?.flow?.epic.current + items?.flow?.legendary.current + items?.flow?.mythic.current - items?.flowTotalCurrent}`})</span>
+                        <span className="smaller" style={{ "color": "red" }}>({`${items?.flow?.common.current + items?.flow?.rare.current + items?.flow?.epic.current + items?.flow?.legendary.current + items?.flow?.mythic.current - items?.flowTotalCurrent}`})</span>
                       }
                     </span>
                   </th>
