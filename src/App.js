@@ -311,10 +311,9 @@ export default function App() {
             <div className="col-6">
               <div className="token mb-2">
                 <span className="symbol wax"><img src={waxSDM} alt='waxSDM icon' /></span>
-                {/* <span className="price">0.005</span> */}
               </div>
               {/* current wax sdm-wax*/}
-              <div>
+              <div className="showOnHover">
                 <span>{tokensPrice?.waxSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/WAX </span>
                 <span className="hide" style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmWaxChange?.toFixed(2)}%</span>
@@ -326,10 +325,10 @@ export default function App() {
                 <span className="smaller"> SDM/WAX</span>
               </div>
               {/* current wax sdm-wax*/}
-              <div>
+              <div className="showOnHover">
                 <span>{(0.00052 * tokensPrice?.usdWAX).toFixed(7)}</span>
                 <span className="smaller"> SDM/USD</span>
-                <span style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
+                <span className="hide" style={{ "color": tokensPrice?.sdmWaxChange < 0 ? "red" : "green" }}>{tokensPrice?.sdmUsdChange?.toFixed(2)}%</span>
               </div>
               {/* initial wax sdm-usd */}
               <div className="hide">
@@ -343,10 +342,9 @@ export default function App() {
             <div className="col-6">
               <div className="token mb-2">
                 <span className="symbol flow"><img src={flowSDM} alt='flowSDM icon' /></span>
-                {/* <span className="price">0.004</span> */}
               </div>
               {/* current flow sdm-usdc*/}
-              <div >
+              <div className="showOnHover">
                 <span>{tokensPrice?.flowSDM?.toFixed(7)}</span>
                 <span className="smaller"> SDM/USDC </span>
                 <span className="hide" style={{ "color": tokensPrice?.sdmFlowchange < 0 ? "red" : "green" }}>{tokensPrice?.sdmFlowchange?.toFixed(2)}%</span>
