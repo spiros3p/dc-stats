@@ -55,7 +55,7 @@ table{
   & .showOnHover{
     & .hide{opacity: 0;}
     &:hover{
-      &+.hide{opacity: 1;}
+      &+div.hide{opacity: 1;}
       & .hide{opacity: 1;}
     }
   }
