@@ -76,9 +76,9 @@ export default function App() {
         axios.get(`${jsonserverURL}/landsInGame`),
         axios.get(`${jsonserverURL}/lastUpdated`),
         axios.get(`${jsonserverURL}/generalInfo`),
-        axios.get(
-          "https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd"
-        ),
+//         axios.get(
+//           "https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd"
+//         ),
         axios.get("https://wax.alcor.exchange/api/markets/542"),
         axios.get(`${jsonserverURL}/pack-sales`),
       ]);
@@ -101,12 +101,12 @@ export default function App() {
         landsInGame.flow.epic.total +
         landsInGame.flow.legendary.total +
         landsInGame.flow.mythic.total;
-      tokensPrice["usdWAX"] = response[6].data.wax.usd;
+//       tokensPrice["usdWAX"] = response[6].data.wax.usd;
       tokensPrice["waxSDM"] = response[7].data.last_price;
-      tokensPrice["sdmUsdChange"] = calculateChangeInPrice(
-        initialSDMPrice.usdWAX * initialSDMPrice.waxSDM,
-        tokensPrice["usdWAX"] * tokensPrice["waxSDM"]
-      );
+//       tokensPrice["sdmUsdChange"] = calculateChangeInPrice(
+//         initialSDMPrice.usdWAX * initialSDMPrice.waxSDM,
+//         tokensPrice["usdWAX"] * tokensPrice["waxSDM"]
+//       );
       tokensPrice["sdmWaxChange"] = calculateChangeInPrice(
         initialSDMPrice.waxSDM,
         tokensPrice["waxSDM"]
@@ -418,8 +418,8 @@ export default function App() {
                 <span>{initialSDMPrice.waxSDM}</span>
                 <span className="smaller"> SDM/WAX</span>
               </div>
-              {/* current wax sdm-wax*/}
-              <div className="showOnHover">
+              {/* current wax sdm-usd*/}
+              {/* <div className="showOnHover">
                 <span>{(0.00052 * tokensPrice?.usdWAX).toFixed(7)}</span>
                 <span className="smaller"> SDM/USD</span>
                 <span
@@ -430,16 +430,16 @@ export default function App() {
                 >
                   {tokensPrice?.sdmUsdChange?.toFixed(2)}%
                 </span>
-              </div>
+              </div> */}
               {/* initial wax sdm-usd */}
-              <div className="hide">
+              {/* <div className="hide">
                 <span className="smaller">INITIAL: </span>
                 <span>
                   {(initialSDMPrice.waxSDM * initialSDMPrice.usdWAX).toFixed(4)}
                 </span>
                 <span className="smaller"> SDM(w)/USD</span>
               </div>
-            </div>
+            </div> */}
 
             {/* FLOW */}
             <div className="col-6">
