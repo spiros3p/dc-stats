@@ -102,7 +102,7 @@ export default function App() {
         landsInGame.flow.legendary.total +
         landsInGame.flow.mythic.total;
 //       tokensPrice["usdWAX"] = response[6].data.wax.usd;
-      tokensPrice["waxSDM"] = response[7].data.last_price;
+      tokensPrice["waxSDM"] = (response[7].data.bid + response[7].data.ask) / 2;
 //       tokensPrice["sdmUsdChange"] = calculateChangeInPrice(
 //         initialSDMPrice.usdWAX * initialSDMPrice.waxSDM,
 //         tokensPrice["usdWAX"] * tokensPrice["waxSDM"]
@@ -438,8 +438,8 @@ export default function App() {
                   {(initialSDMPrice.waxSDM * initialSDMPrice.usdWAX).toFixed(4)}
                 </span>
                 <span className="smaller"> SDM(w)/USD</span>
-              </div>
-            </div> */}
+              </div>*/}
+            </div> 
 
             {/* FLOW */}
             <div className="col-6">
