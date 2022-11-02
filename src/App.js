@@ -82,7 +82,7 @@ export default function App() {
         axios.get("https://wax.alcor.exchange/api/markets/542"),
         axios.get(`${jsonserverURL}/pack-sales`),
       ]);
-      packSales = response[8].data.packs;
+      packSales = response[7].data.packs;
       bugs = response[0].data;
       openedPacks = response[1].data;
       landsInPacks = response[2].data;
@@ -102,7 +102,7 @@ export default function App() {
         landsInGame.flow.legendary.total +
         landsInGame.flow.mythic.total;
 //       tokensPrice["usdWAX"] = response[6].data.wax.usd;
-      tokensPrice["waxSDM"] = (response[7].data.bid + response[7].data.ask) / 2;
+      tokensPrice["waxSDM"] = (response[6].data.bid + response[7].data.ask) / 2;
 //       tokensPrice["sdmUsdChange"] = calculateChangeInPrice(
 //         initialSDMPrice.usdWAX * initialSDMPrice.waxSDM,
 //         tokensPrice["usdWAX"] * tokensPrice["waxSDM"]
