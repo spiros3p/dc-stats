@@ -75,7 +75,7 @@ export const Wallet = () => {
       console.log(address);
       console.log(amount);
       // const burnAmount = 0.0;
-      const burnAmount = amount >= 100000 ? 10.0 : 5.0;
+      const burnAmount = amount >= 100000 ? 10.00000000 : 5.00000000;
 
       // return
       const result = await fcl.mutate({
