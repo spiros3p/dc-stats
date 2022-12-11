@@ -79,12 +79,12 @@ export const Wallet = () => {
 
       // return
       const result = await fcl.mutate({
-        cadence: cadenceScripts.transferSDMToWallet,
-        //cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
+        //cadence: cadenceScripts.transferSDMToWallet,
+        cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
         args: (arg, t) => [
           arg(amount, t.UFix64),
           arg(address, t.Address),
-          //arg(burnAmount, t.UFix64),
+          arg(burnAmount, t.UFix64),
         ],
         payer: fcl.authz,
         proposer: fcl.authz,
