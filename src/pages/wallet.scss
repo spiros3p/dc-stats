@@ -1,0 +1,169 @@
+@import "../variables";
+
+:element {
+  --bg1: black;
+  --bg2: grey;
+}
+
+.user-address {
+  transform: scale(0.9);
+  margin-left: 10px;
+  padding: 0 5px;
+}
+
+.section-title {
+  padding: 10px 5px 12px;
+
+  & button {
+    font-family: $roboto !important;
+    font-weight: 600;
+  }
+}
+
+label {
+  align-self: center;
+}
+
+input {
+  align-self: center;
+}
+
+.sdm-icon {
+  height: 33px;
+}
+
+// .spinner-grow {
+//   height: 18px;
+//   width: 18px;
+// }
+
+.wrapper {
+  &-disconnected {
+  }
+  &-connected {
+  }
+  &-disconnected,
+  &-connected {
+    padding: 10px 0;
+  }
+}
+
+.transfer {
+  &-wrapper {
+    max-width: 600px;
+    padding: 10px;
+  }
+  &-panel {
+    padding: 0 15px 15px;
+    border-radius: 8px;
+    background-color: $darkBg;
+    border: 2px solid transparent;
+    background-image: radial-gradient(rgb(42, 42, 42) 5%, black 95%),
+      linear-gradient(136.53deg, rgb(43, 43, 43), black 99.76%);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    box-shadow: 0 0 120px rgb(94 120 255 / 24%);
+
+    &-header {
+      justify-content: space-between;
+      display: flex;
+      &-wrapper {
+        margin-bottom: 10px;
+        padding: 6px 12px;
+        border-bottom: 1px solid white;
+      }
+      & .title {
+        margin: 0;
+      }
+    }
+    &-body {
+      // border-bottom: 1px solid white;
+      & .transfer-form {
+        &-wrapper {
+        }
+        &-group {
+          margin-bottom: 10px;
+          &-upper {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            & .token {
+              display: flex;
+              &-icon {
+              }
+              &-label {
+              }
+            }
+            & .balance {
+              &-label {
+                margin-right: 4px;
+              }
+              &-amount {
+                color: red;
+              }
+            }
+          }
+          &-lower {
+            & .input-wrapper {
+              & input {
+                width: 100%;
+                border-radius: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &-information{
+      padding: 10px 0;
+      margin-bottom: 8px;
+      &-wrapper{
+
+      }
+      &-group{
+        &-label{
+          margin-right: 10px;
+          font-size: 12px;
+          font-style: italic;
+          color: rgb(194, 194, 194);
+        }
+        & button{
+          transform: scale(0.8);
+        }
+      }
+    }
+    &-footer {
+      &-wrapper{
+        
+      }
+      & .form-btn-group{
+        & .btn-submit, .btn-status{
+          width: 100%;
+        }
+        & .btn-status{
+          pointer-events: none;
+          & .label{
+            margin-right: 8px;
+          }
+          & .spinner-grow{
+            height: 17px;
+            width: 17px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.error-notification{
+  color: red;
+  font-size: 14px;
+  margin: 14px 0 6px;
+}
+
+.success-notification{
+  color: green;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 14px 0 6px;
+}
