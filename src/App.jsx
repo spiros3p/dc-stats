@@ -34,7 +34,7 @@ export default function App() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="wallet" className="nav-link">
+                <NavLink to="dc-stats/wallet" className="nav-link">
                   WALLET
                 </NavLink>
               </li>
@@ -45,7 +45,7 @@ export default function App() {
 
       <Routes>
         <Route path="dc-stats" element={<Home />} />
-        <Route path="wallet" element={<Wallet />} />
+        <Route path="dc-stats/wallet" element={<Wallet />} />
       </Routes>
     </div>
   );
