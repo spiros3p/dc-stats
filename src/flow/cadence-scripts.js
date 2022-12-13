@@ -204,7 +204,7 @@ import FungibleToken from 0xf233dcee88fe0abe
     
             // Get the recipient''s public account object
             let recipient = getAccount(to)
-            let recipient2 = getAccount(0xc8c340cebd11f690)
+            // let recipient2 = getAccount(0xc8c340cebd11f690)
     
             // Get a reference to the recipient''s Receiver
             let receiverRef = recipient.getCapability(/public/sdmTokenReceiver)
