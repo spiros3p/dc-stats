@@ -75,16 +75,17 @@ export const Wallet = () => {
       console.log(address);
       console.log(amount);
       // const burnAmount = 0.0;
-      const burnAmount = amount >= 100000 ? 10.00000000 : 5.00000000;
+      const burnAmount = parseFloat(amount >= 100000 ? 10.00000000 : 5.00000000).toFixed(8);
+      console.log(`Burn amount: ${burnAmount}`);
 
       // return
       const result = await fcl.mutate({
-        cadence: cadenceScripts.transferSDMToWallet,
-        //cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
+//         cadence: cadenceScripts.transferSDMToWallet,
+        cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
         args: (arg, t) => [
           arg(amount, t.UFix64),
           arg(address, t.Address),
-          //arg(burnAmount, t.UFix64),
+          arg(burnAmount, t.UFix64),
         ],
         payer: fcl.authz,
         proposer: fcl.authz,
