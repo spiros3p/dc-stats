@@ -81,14 +81,9 @@ export const Home = () => {
           //           "https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd"
           //         ),
           axios.get("https://wax.alcor.exchange/api/markets/542"),
-//           axios.get(`${jsonserverURL}/pack-sales`),
+          axios.get(`${jsonserverURL}/pack-sales`),
         ]);
-        try{
-          const packSaleRes = axios.get(`${jsonserverURL}/pack-sales`);
-        }catch(e){
-          console.error(e)
-        }
-        packSales = packSaleRes.data.packs;
+        packSales = response[7]?.data?.packs || '-' ;
         bugs = response[0].data;
         openedPacks = response[1].data;
         landsInPacks = response[2].data;
