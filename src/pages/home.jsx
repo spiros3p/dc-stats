@@ -54,7 +54,21 @@ export const Home = () => {
   
     useEffect(() => {
       fetchEverything();
+      fetchPackSales();
     }, []);
+  
+    const fetchPackSales = async () => {
+      try {
+        const resp = await axios.get(`${jsonserverURL}/pack-sales`);
+        setPackSalesState(resp?.data?.packs || '-');
+      } catch(e){
+        if (e.response) {
+          console.error(e.response.data);
+        } else {
+          console.error(e);
+        }
+      }
+    }
   
     useEffect(() => {
       // console.log("RUN");
@@ -65,7 +79,7 @@ export const Home = () => {
       setLastUpdatedState(lastUpdated);
       setGeneralInfoState(generalInfo);
       setTokensPriceState(tokensPrice);
-      setPackSalesState(packSales);
+//       setPackSalesState(packSales);
     }, [fetched]);
   
     const fetchEverything = async () => {
@@ -81,9 +95,9 @@ export const Home = () => {
           //           "https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd"
           //         ),
           axios.get("https://wax.alcor.exchange/api/markets/542"),
-          axios.get(`${jsonserverURL}/pack-sales`),
+//           axios.get(`${jsonserverURL}/pack-sales`),
         ]);
-        packSales = response[7]?.data?.packs || '-' ;
+//         packSales = response[7]?.data?.packs || '-' ;
         bugs = response[0].data;
         openedPacks = response[1].data;
         landsInPacks = response[2].data;
