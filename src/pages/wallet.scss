@@ -171,6 +171,8 @@ input {
 .table-wrapper{
 
   & table{
+    max-width: 700px;
+    margin: 0 auto;
 
     & thead{
       border-bottom: 1px solid white;

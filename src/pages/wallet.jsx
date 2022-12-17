@@ -125,9 +125,9 @@ export const Wallet = () => {
             if (!!res.statusString) {
               setLoadingStatusText(res.statusString);
               if (res.statusString === "SEALED") {
-                console.log('LOG TRANSFER');
-                console.log(amount)
-                console.log(user.addr)
+                console.log("LOG TRANSFER");
+                console.log(amount);
+                console.log(user.addr);
                 logWalletTrxBurnAmount(user.addr, amount);
               }
             }
@@ -176,7 +176,7 @@ export const Wallet = () => {
     try {
       const res = await axios.get(`${MY_DC_API}/sdm-burned`);
       console.log(res.data);
-      setWalletList(res.data);
+      renderList(res.data);
     } catch (e) {
       console.error(e);
     }
@@ -195,7 +195,7 @@ export const Wallet = () => {
         return wallet;
       });
       console.log(updatedList);
-      setWalletList(updatedList);
+      renderList(updatedList);
     } catch (e) {
       console.error(e);
     }
@@ -206,6 +206,13 @@ export const Wallet = () => {
       wallet: wallet,
       amountTransferred: amount,
     };
+  };
+
+  const renderList = async (list) => {
+    const sortedList = await list.sort(function (a, b) {
+      return b.amountBurned - a.amountBurned;
+    });
+    setWalletList(sortedList);
   };
 
   return (
@@ -407,7 +414,12 @@ export const Wallet = () => {
               {walletList.length > 0 &&
                 walletList.map((wallet, i) => {
                   return (
-                    <tr key={i} className={ wallet.wallet === user.addr ?'user-wallet':''}>
+                    <tr
+                      key={i}
+                      className={
+                        wallet.wallet === user.addr ? "user-wallet" : ""
+                      }
+                    >
                       <th scope="row">{i + 1}</th>
                       <td>{wallet.wallet}</td>
                       <td>{wallet.amountBurned}</td>
