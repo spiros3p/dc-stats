@@ -167,3 +167,22 @@ input {
   font-size: 14px;
   margin: 14px 0 6px;
 }
+
+.table-wrapper{
+
+  & table{
+
+    & thead{
+      border-bottom: 1px solid white;
+    }
+    & tbody{
+      & tr.user-wallet{
+        border: 2px solid green;
+      }
+      & tr td {
+        font-weight: 400 !important;
+
+      }
+    }
+  }
+}

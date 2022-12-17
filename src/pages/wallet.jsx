@@ -4,6 +4,9 @@ import * as fcl from "@onflow/fcl";
 import * as t from "@onflow/types";
 import * as cadenceScripts from "../flow/cadence-scripts";
 import sdmTokenIcon from "../media/sdmToken.png";
+import axios from "axios";
+
+const MY_DC_API = "https://dc-api.speppas.online";
 
 fcl.config({
   "accessNode.api": "https://rest-mainnet.onflow.org",
@@ -20,10 +23,12 @@ export const Wallet = () => {
   const [trxStatus, setTrxStatus] = useState("draft"); //draft, loading, error, executed, sealed
   const [loadingStatusText, setLoadingStatusText] = useState("");
   const [trxErrorText, setTrxErrorText] = useState("");
+  const [walletList, setWalletList] = useState([]);
 
   // subscribing to fcl.currentUser will set the user state after a succesful login or logout
   useEffect(() => {
     fcl.currentUser.subscribe(setUser);
+    fetchWalletList();
   }, []);
 
   useEffect(() => {
@@ -75,17 +80,17 @@ export const Wallet = () => {
       console.log(address);
       console.log(amount);
       // const burnAmount = 0.0;
-      const burnAmount = parseFloat(amount >= 100000 ? 10.00000000 : 5.00000000).toFixed(8);
+      const burnAmount = parseFloat(amount >= 100000 ? 10.0 : 5.0).toFixed(8);
       console.log(`Burn amount: ${burnAmount}`);
 
       // return
       const result = await fcl.mutate({
-//         cadence: cadenceScripts.transferSDMToWallet,
-        cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
+        cadence: cadenceScripts.transferSDMToWallet,
+        // cadence: cadenceScripts.transferSDMToWalletWithBurn, // with Burn
         args: (arg, t) => [
           arg(amount, t.UFix64),
           arg(address, t.Address),
-          arg(burnAmount, t.UFix64),
+          // arg(burnAmount, t.UFix64),
         ],
         payer: fcl.authz,
         proposer: fcl.authz,
@@ -117,7 +122,15 @@ export const Wallet = () => {
             }
             changeStatusWithDelay("draft");
           } else {
-            if (!!res.statusString) setLoadingStatusText(res.statusString);
+            if (!!res.statusString) {
+              setLoadingStatusText(res.statusString);
+              if (res.statusString === "SEALED") {
+                console.log('LOG TRANSFER');
+                console.log(amount)
+                console.log(user.addr)
+                logWalletTrxBurnAmount(user.addr, amount);
+              }
+            }
           }
         },
         (error) => {
@@ -157,6 +170,42 @@ export const Wallet = () => {
     setTimeout(() => {
       setLoadingStatusText(text);
     }, 3000);
+  };
+
+  const fetchWalletList = async () => {
+    try {
+      const res = await axios.get(`${MY_DC_API}/sdm-burned`);
+      console.log(res.data);
+      setWalletList(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const logWalletTrxBurnAmount = async (wallet, amount) => {
+    try {
+      const res = await axios.post(
+        `${MY_DC_API}/sdm-burned`,
+        mapRequest(wallet, amount)
+      );
+      const updatedList = walletList.map((wallet) => {
+        if (wallet.wallet === res.data.wallet) {
+          wallet.amountBurned = res.data.amountBurned;
+        }
+        return wallet;
+      });
+      console.log(updatedList);
+      setWalletList(updatedList);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const mapRequest = (wallet, amount) => {
+    return {
+      wallet: wallet,
+      amountTransferred: amount,
+    };
   };
 
   return (
@@ -342,6 +391,32 @@ export const Wallet = () => {
             </div>
           </div>
         )}
+
+        <div className="table-wrapper my-2 py-2">
+          <h4 className="section-title">Burned Amount Wallet List</h4>
+
+          <table className="table table-striped table-dark table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Wallet</th>
+                <th scope="col">Burned Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {walletList.length > 0 &&
+                walletList.map((wallet, i) => {
+                  return (
+                    <tr key={i} className={ wallet.wallet === user.addr ?'user-wallet':''}>
+                      <th scope="row">{i + 1}</th>
+                      <td>{wallet.wallet}</td>
+                      <td>{wallet.amountBurned}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
