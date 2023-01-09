@@ -421,7 +421,7 @@ export const Wallet = () => {
                       }
                     >
                       <th scope="row">{i + 1}</th>
-                      <td>{wallet.wallet}</td>
+                      <td>`${wallet.wallet.slice(0,2)}...${wallet.wallet.slice(14,wallet.wallet.length)}`</td>
                       <td>{wallet.amountBurned}</td>
                     </tr>
                   );
