@@ -103,7 +103,7 @@ transaction {
             signer.save(<-collection, to: DarkCountry.CollectionStoragePath)
 
             // create a public capability for the collection
-            signer.link<&DarkCountry.Collection{NonFungibleToken.CollectionPublic, DarkCountry.DarkCountryCollectionPublic}>(DarkCountry.CollectionPublicPath, target: DarkCountry.CollectionStoragePath)
+            signer.link<&DarkCountry.Collection{NonFungibleToken.CollectionPublic, NonFungibleToken.Provider, NonFungibleToken.Receiver, DarkCountry.DarkCountryCollectionPublic}>(DarkCountry.CollectionPublicPath, target: DarkCountry.CollectionStoragePath)
         }
         
         // if the account doesn''t already have a collection
