@@ -217,8 +217,10 @@ import FungibleToken from 0xf233dcee88fe0abe
 
             // Deposit the withdrawn tokens in the recipient''s receiver
             receiverRef.deposit(from: <-self.sentVault)
-
+            
             // receiverRef2.deposit(from: <-self.sentVaultBurn)
+            
+            emit SdmToken.TokensBurned(amount: burnAmount)
             destroy self.sentVaultBurn
         }
     }
