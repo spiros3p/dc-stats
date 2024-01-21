@@ -28,13 +28,14 @@ export default function App() {
             id="navbarNav"
           >
             <ul className="navbar-nav">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink to="dc-stats" className="nav-link">
                   HOME
                 </NavLink>
-              </li>
+              </li> */}
               <li className="nav-item">
-                <NavLink to="dc-stats/wallet" className="nav-link">
+                {/* <NavLink to="dc-stats/wallet" className="nav-link"> */}
+                <NavLink to="dc-stats" className="nav-link">
                   WALLET
                 </NavLink>
               </li>
@@ -44,8 +45,9 @@ export default function App() {
       </nav>
 
       <Routes>
-        <Route path="dc-stats" element={<Home />} />
-        <Route path="dc-stats/wallet" element={<Wallet />} />
+        {/* <Route path="dc-stats" element={<Home />} /> */}
+        {/* <Route path="dc-stats/wallet" element={<Wallet />} /> */}
+        <Route path="dc-stats" element={<Wallet />} />
       </Routes>
     </div>
   );
