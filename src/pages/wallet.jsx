@@ -4,9 +4,9 @@ import * as fcl from "@onflow/fcl";
 import * as t from "@onflow/types";
 import * as cadenceScripts from "../flow/cadence-scripts";
 import sdmTokenIcon from "../media/sdmToken.png";
-import axios from "axios";
+// import axios from "axios";
 
-const MY_DC_API = "https://dc-api.speppas.online";
+// const MY_DC_API = "";
 
 fcl.config({
   "accessNode.api": "https://rest-mainnet.onflow.org",
@@ -24,11 +24,12 @@ export const Wallet = () => {
   const [loadingStatusText, setLoadingStatusText] = useState("");
   const [trxErrorText, setTrxErrorText] = useState("");
   const [walletList, setWalletList] = useState([]);
+  const [disableBurnedSection, setDisableBurnedSection] = useState(true)
 
   // subscribing to fcl.currentUser will set the user state after a succesful login or logout
   useEffect(() => {
     fcl.currentUser.subscribe(setUser);
-    fetchWalletList();
+    // fetchWalletList();
   }, []);
 
   useEffect(() => {
@@ -128,7 +129,7 @@ export const Wallet = () => {
                 console.log("LOG TRANSFER");
                 console.log(amount);
                 console.log(user.addr);
-                logWalletTrxBurnAmount(user.addr, amount);
+                // logWalletTrxBurnAmount(user.addr, amount);
               }
             }
           }
@@ -172,34 +173,34 @@ export const Wallet = () => {
     }, 3000);
   };
 
-  const fetchWalletList = async () => {
-    try {
-      const res = await axios.get(`${MY_DC_API}/sdm-burned`);
-      console.log(res.data);
-      renderList(res.data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const fetchWalletList = async () => {
+  //   try {
+  //     const res = await axios.get(`${MY_DC_API}/sdm-burned`);
+  //     console.log(res.data);
+  //     renderList(res.data);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
-  const logWalletTrxBurnAmount = async (wallet, amount) => {
-    try {
-      const res = await axios.post(
-        `${MY_DC_API}/sdm-burned`,
-        mapRequest(wallet, amount)
-      );
-      const updatedList = walletList.map((wallet) => {
-        if (wallet.wallet === res.data.wallet) {
-          wallet.amountBurned = res.data.amountBurned;
-        }
-        return wallet;
-      });
-      console.log(updatedList);
-      renderList(updatedList);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const logWalletTrxBurnAmount = async (wallet, amount) => {
+  //   try {
+  //     const res = await axios.post(
+  //       `${MY_DC_API}/sdm-burned`,
+  //       mapRequest(wallet, amount)
+  //     );
+  //     const updatedList = walletList.map((wallet) => {
+  //       if (wallet.wallet === res.data.wallet) {
+  //         wallet.amountBurned = res.data.amountBurned;
+  //       }
+  //       return wallet;
+  //     });
+  //     console.log(updatedList);
+  //     renderList(updatedList);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   const mapRequest = (wallet, amount) => {
     return {
@@ -399,7 +400,7 @@ export const Wallet = () => {
           </div>
         )}
 
-        <div className="table-wrapper my-2 py-2">
+        {!disableBurnedSection && <div className="table-wrapper my-2 py-2">
           <h4 className="section-title">Burned Amount Wallet List</h4>
 
           <table className="table table-striped table-dark table-sm">
@@ -428,7 +429,7 @@ export const Wallet = () => {
                 })}
             </tbody>
           </table>
-        </div>
+        </div>}
       </div>
     </>
   );
